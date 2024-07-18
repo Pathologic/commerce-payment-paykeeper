@@ -34,6 +34,7 @@ class Paykeeper extends Payment
             'client_phone'         => $order['phone'],
             'currency'             => $order['currency'],
             'orderid'              => $order['id'] . '-' . $payment['id'],
+            'service_name'         => $this->lang['paykeeper.order_description'] . ' ' . $order['id']
         ];
 
         $cart = $processor->getCart();
@@ -52,7 +53,7 @@ class Paykeeper extends Payment
 
         $data['cart'] = json_encode($products);
         $data['sign'] = hash('sha256', $data['sum'] . $data['clientid'] . $data['orderid']
-            . '' . $data['client_email'] . $data['client_phone'] . $this->getSetting('secret_key'));
+            . $data['service_name'] . $data['client_email'] . $data['client_phone'] . $this->getSetting('secret_key'));
 
         $view = new \Commerce\Module\Renderer($this->modx, null, [
             'path' => 'assets/plugins/commerce/templates/front/',
