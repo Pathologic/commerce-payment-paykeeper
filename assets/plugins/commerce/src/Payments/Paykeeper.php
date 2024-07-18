@@ -34,7 +34,6 @@ class Paykeeper extends Payment
             'client_phone'         => $order['phone'],
             'currency'             => $order['currency'],
             'orderid'              => $order['id'] . '-' . $payment['id'],
-            'user_result_callback' => MODX_SITE_URL . 'commerce/paykeeper/payment-process',
         ];
 
         $cart = $processor->getCart();
