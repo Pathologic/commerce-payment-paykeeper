@@ -99,7 +99,12 @@ class Paykeeper extends Payment
                 throw new Exception('Payment "' . htmlentities(print_r($payment_id, true)) . '" . not found!');
             }
 
-            return $processor->processPayment($payment['id'], $payment['amount']);
+            $result = $processor->processPayment($payment['id'], $payment['amount']);
+            if($result) {
+                echo 'OK ' . md5($input['id'] . $this->getSetting('secret_key'));
+            }
+
+            return $result;
         } catch (Exception $e) {
             if ($this->debug) {
                 $this->modx->logEvent(0, 3, 'Payment process failed: ' . $e->getMessage(),
